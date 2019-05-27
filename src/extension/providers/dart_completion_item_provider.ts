@@ -153,9 +153,7 @@ export class DartCompletionItemProvider implements CompletionItemProvider, IAmDi
 
 			for (const kind of resp.includedElementKinds) {
 				const suggestions = suggestionSet.itemsByKind[kind] || [];
-				for (let i = 0; i < suggestions.length; i++) {
-					let suggestion = suggestions[i];
-
+				const setResults = suggestions.map((suggestion, i) => {
 					// If this item has not already been cached, convert it into a
 					// cached suggestion and put it back into the list. This will
 					// avoid us doing this work in future requests that request
@@ -194,17 +192,18 @@ export class DartCompletionItemProvider implements CompletionItemProvider, IAmDi
 						0,
 					);
 
-					// Add it to the list with additional info that resolve will
-					// need.
-					results.push({
+					// Add additional info that resolve will need.
+					return {
 						...completionItem,
 						document,
 						filePath,
 						offset,
 						suggestion,
 						suggestionSetID: includedSuggestionSet.id,
-					});
-				}
+					};
+				});
+
+				results.push(...setResults);
 			}
 		}
 
