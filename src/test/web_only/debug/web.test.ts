@@ -31,7 +31,7 @@ describe("web debugger", () => {
 		return config;
 	}
 
-	it("runs a web application and remains active until told to quit", async () => {
+	it.only("runs a web application and remains active until told to quit", async () => {
 		const config = await startDebugger(webHelloWorldIndexFile);
 		await Promise.all([
 			watchPromise("assertOutputContains(serving web on)", dc.assertOutputContains("stdout", "Serving `web` on http://127.0.0.1:")),

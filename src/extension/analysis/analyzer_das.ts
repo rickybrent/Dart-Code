@@ -5,6 +5,7 @@ import { Analyzer } from "../../shared/analyzer";
 import { dartVMPath } from "../../shared/constants";
 import { LogCategory } from "../../shared/enums";
 import { DartSdks, Logger } from "../../shared/interfaces";
+import { nullLogger } from "../../shared/logging";
 import { PromiseCompleter, versionIsAtLeast } from "../../shared/utils";
 import { Analytics } from "../analytics";
 import { config } from "../config";
@@ -73,7 +74,7 @@ export class DasAnalyzerClient extends AnalyzerGen {
 	public capabilities: AnalyzerCapabilities = AnalyzerCapabilities.empty;
 
 	constructor(logger: Logger, sdks: DartSdks, dartCapabilities: DartCapabilities) {
-		super(logger, config.maxLogLineLength);
+		super(nullLogger, config.maxLogLineLength);
 
 		this.launchArgs = getAnalyzerArgs(logger, sdks, dartCapabilities, false);
 
