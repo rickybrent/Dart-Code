@@ -177,6 +177,11 @@ export class DebugConfigProvider implements DebugConfigurationProvider {
 		}
 		logger.info(`Detected launch project as ${DebuggerType[debugType]}`);
 
+		if (debugConfig.forceDebugger === "dart") {
+			logger.info(`Debugger is being forced to ${debugConfig.forceDebugger} by launch config!`);
+			debugType = DebuggerType.Dart;
+		}
+
 		// Some helpers for conditions below.
 		const isAnyFlutter = debugType === DebuggerType.Flutter || debugType === DebuggerType.Web;
 		const isStandardFlutter = debugType === DebuggerType.Flutter;

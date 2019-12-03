@@ -241,6 +241,7 @@ export class FlutterDebugSession extends DartDebugSession {
 		this.isReloadInProgress = true;
 		const restartType = hotRestart ? "hot-restart" : "hot-reload";
 		try {
+			// TODO: Move this over to VM Service.
 			await this.runDaemon.restart(this.currentRunningAppId, !this.noDebug, hotRestart, reason);
 			this.requestCoverageUpdate(restartType);
 		} catch (e) {
@@ -253,12 +254,14 @@ export class FlutterDebugSession extends DartDebugSession {
 	protected async customRequest(request: string, response: DebugProtocol.Response, args: any): Promise<void> {
 		try {
 			switch (request) {
+				// TODO: Move this into base and make it go over the VM service.
 				case "serviceExtension":
 					if (this.currentRunningAppId && this.runDaemon)
 						await this.runDaemon.callServiceExtension(this.currentRunningAppId, args.type, args.params);
 					this.sendResponse(response);
 					break;
 
+				// TODO: Fold this into serviceExtension above, and pass the whole `result` back for the caller to read `.value`.
 				case "checkPlatformOverride":
 					if (this.currentRunningAppId && this.runDaemon) {
 						const result = await this.runDaemon.callServiceExtension(this.currentRunningAppId, "ext.flutter.platformOverride", undefined);
@@ -267,6 +270,7 @@ export class FlutterDebugSession extends DartDebugSession {
 					this.sendResponse(response);
 					break;
 
+				// TODO: Fold this into serviceExtension above, and pass the whole `result` back for the caller to read `.result`.
 				case "checkIsWidgetCreationTracked":
 					if (this.currentRunningAppId && this.runDaemon) {
 						const result = await this.runDaemon.callServiceExtension(this.currentRunningAppId, "ext.flutter.inspector.isWidgetCreationTracked", undefined);

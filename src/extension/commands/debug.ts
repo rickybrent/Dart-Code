@@ -216,6 +216,15 @@ export class DebugCommands {
 				type: "dart",
 			});
 		}));
+		context.subscriptions.push(vs.commands.registerCommand("flutter.attachToFlutterRun", () => {
+			vs.debug.startDebugging(undefined, {
+				forceDebugger: "dart",
+				name: "Flutter: Attach to Process",
+				observatoryUri: "${command:dart.promptForVmService}",
+				request: "attach",
+				type: "dart",
+			});
+		}));
 		context.subscriptions.push(vs.commands.registerCommand("flutter.attach", () => {
 			vs.debug.startDebugging(undefined, {
 				name: "Flutter: Attach to Device",

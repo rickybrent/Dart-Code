@@ -123,7 +123,12 @@
 			},
 			{
 				"command": "flutter.attachProcess",
-				"title": "Attach to Flutter Process",
+				"title": "Attach to Flutter App (add-to-app)",
+				"category": "Debug"
+			},
+			{
+				"command": "flutter.attachToFlutterRun",
+				"title": "Attach to Flutter App (started with flutter run)",
 				"category": "Debug"
 			},
 			{
@@ -530,6 +535,10 @@
 				{
 					"command": "flutter.attachProcess",
 					"when": "dart-code:anyFlutterProjectLoaded && !inDebugMode && dart-code:flutterSupportsAttach"
+				},
+				{
+					"command": "flutter.attachToFlutterRun",
+					"when": "dart-code:anyFlutterProjectLoaded && !inDebugMode"
 				},
 				{
 					"command": "dart.sortMembers",
