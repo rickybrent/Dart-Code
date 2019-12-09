@@ -4,7 +4,6 @@ import * as path from "path";
 import * as sinon from "sinon";
 import * as vs from "vscode";
 import { FLUTTER_CREATE_PROJECT_TRIGGER_FILE } from "../../../shared/constants";
-import { FlutterSampleSnippet } from "../../../shared/vscode/interfaces";
 import { fsPath } from "../../../shared/vscode/utils";
 import { attachLoggingWhenExtensionAvailable, ext, getRandomTempFolder, sb } from "../../helpers";
 
@@ -49,28 +48,5 @@ describe("command", () => {
 		assert.ok(showOpenDialog.calledOnce);
 		assert.ok(openFolder.calledOnce);
 		assert.ok(fs.existsSync(path.join(tempFolder, "my_test_flutter_proj", FLUTTER_CREATE_PROJECT_TRIGGER_FILE)));
-	});
-
-	it("Flutter: Create Sample Project can be invoked and creates trigger file", async () => {
-		const showQuickPick = sb.stub(vs.window, "showQuickPick");
-		type SnippetOption = vs.QuickPickItem & { snippet: FlutterSampleSnippet };
-		// TODO: Remove "material.IconButton" without the suffix after the next stable Flutter release (the one after v1.2).
-		showQuickPick.callsFake((items: SnippetOption[]) => items.find((s) => s.snippet.id === "material.IconButton" || s.snippet.id === "material.IconButton.1"));
-
-		// Intercept executeCommand for openFolder so we don't spawn a new instance of Code!
-		const executeCommand = sb.stub(vs.commands, "executeCommand").callThrough();
-		const openFolder = executeCommand.withArgs("vscode.openFolder", sinon.match.any).resolves();
-
-		const sampleFolderUri: string | undefined = await vs.commands.executeCommand("_dart.flutter.createSampleProject");
-
-		assert.ok(sampleFolderUri);
-		assert.ok(showQuickPick.calledOnce);
-		assert.ok(openFolder.calledOnce);
-		const triggerFile = path.join(fsPath(sampleFolderUri!), FLUTTER_CREATE_PROJECT_TRIGGER_FILE);
-		assert.ok(fs.existsSync(triggerFile));
-		const recordedSampleId = fs.readFileSync(triggerFile).toString().trim();
-		// TODO: Remove next line and uncomment the following one after the next stable Flutter release (the one after v1.2).
-		assert.equal(recordedSampleId === "material.IconButton" || recordedSampleId === "material.IconButton.1", true);
-		// assert.equal(recordedSampleId, "material.IconButton.1");
 	});
 });

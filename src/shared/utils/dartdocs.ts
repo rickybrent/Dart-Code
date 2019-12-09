@@ -41,17 +41,3 @@ export function cleanDartdoc(doc: string | undefined, iconPathFormat: string): s
 
 	return doc;
 }
-
-/// Strips markdown to make nicer plain text.
-export function stripMarkdown(doc: string): string {
-	if (!doc)
-		return "";
-
-	// Remove links like [foo](bar).
-	doc = doc.replace(/\[(.+?)\]\(.+?\)/g, "$1");
-
-	// Remove references like [foo].
-	doc = doc.replace(/\[(.+?)\]/g, "$1");
-
-	return doc;
-}

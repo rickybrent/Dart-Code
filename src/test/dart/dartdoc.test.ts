@@ -1,6 +1,5 @@
 import * as assert from "assert";
 import { Uri } from "vscode";
-import { stripMarkdown } from "../../shared/utils/dartdocs";
 import { cleanDartdoc, extensionPath } from "../../shared/vscode/extension_utils";
 
 describe("cleanDartDoc", () => {
@@ -82,21 +81,5 @@ describe("cleanDartDoc", () => {
 		\`\`\`
 		`;
 		assert.equal(cleanDartdoc(input), expected);
-	});
-});
-
-describe("stripMarkdown", () => {
-	it("removes links and references", () => {
-		const input = `
-		This example shows a [Scaffold] with an [AppBar], a [BottomAppBar] and a
-		[FloatingActionButton]. The [body] is a [Text] placed in a [Center] in order
-		to center the text within the
-		`;
-		const expected = `
-		This example shows a Scaffold with an AppBar, a BottomAppBar and a
-		FloatingActionButton. The body is a Text placed in a Center in order
-		to center the text within the
-		`;
-		assert.equal(stripMarkdown(input), expected);
 	});
 });

@@ -29,9 +29,6 @@ export class SdkUtils {
 		context.subscriptions.push(commands.registerCommand("dart.createProject", (_) => {
 			this.showRelevantActivationFailureMessage(analytics, workspaceContext, false, "dart.createProject");
 		}));
-		context.subscriptions.push(commands.registerCommand("_dart.flutter.createSampleProject", (_) => {
-			this.showRelevantActivationFailureMessage(analytics, workspaceContext, true, "_dart.flutter.createSampleProject");
-		}));
 		context.subscriptions.push(commands.registerCommand("flutter.doctor", (_) => {
 			this.showRelevantActivationFailureMessage(analytics, workspaceContext, true, "flutter.doctor");
 		}));
