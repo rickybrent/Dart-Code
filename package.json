@@ -1759,8 +1759,9 @@
 		"build-tests": "tsc -p ./",
 		"watch-tests": "tsc -p ./ --watch",
 		"lint": "tslint 'src/**/*.ts' -t verbose",
-		"test": "npm run build-with-instrumentation && npm run build-tests && npm run instrument && npm run test-only && npm run report_lcov && npm run report_screen",
+		"test": "npm run build-with-instrumentation && npm run build-tests && npm run write_empty_coverage && npm run instrument && npm run test-only && npm run report_lcov && npm run report_screen",
 		"instrument": "cd out/src && nyc instrument --compact false --in-place . . && cd ../..",
+		"write_empty_coverage": "cd out/src && nyc --all --reporter=none --include out/src --exclude out/src/test echo && cd ../..",
 		"test-only": "node ./out/src/test/test_all.js",
 		"report_lcov": "nyc report -r lcovonly --report-dir coverage/$BOT",
 		"report_screen": "nyc report"
