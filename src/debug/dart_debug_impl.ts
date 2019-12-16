@@ -1182,12 +1182,12 @@ export class DartDebugSession extends DebugSession {
 		}
 	}
 
-	private urlExposeCompleters: { [key: string]: PromiseCompleter<string> } = {};
-	protected async exposeUrl(url: string): Promise<string> {
+	private urlExposeCompleters: { [key: string]: PromiseCompleter<{ url: string }> } = {};
+	protected async exposeUrl(url: string): Promise<{ url: string }> {
 		if (this.urlExposeCompleters[url])
 			return this.urlExposeCompleters[url].promise;
 
-		const completer = new PromiseCompleter<string>();
+		const completer = new PromiseCompleter<{ url: string }>();
 		this.urlExposeCompleters[url] = completer;
 
 		this.sendEvent(new Event("dart.exposeUrl", { url }));
@@ -1218,7 +1218,7 @@ export class DartDebugSession extends DebugSession {
 				case "exposeUrlResponse":
 					const completer = this.urlExposeCompleters[args.originalUrl];
 					if (completer)
-						completer.resolve(args.exposedUrl);
+						completer.resolve({ url: args.exposedUrl });
 					break;
 				case "updateDebugOptions":
 					this.debugExternalLibraries = !!args.debugExternalLibraries;
