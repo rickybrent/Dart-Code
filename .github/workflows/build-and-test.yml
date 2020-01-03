@@ -16,7 +16,7 @@ jobs:
         dart-version: [stable, dev]
         # for now, code-version will mirror dart-version to reduce number of bots
         # code-version: [stable] #, insiders]
-        bot: [dart, flutter, misc]
+        bot: [dart, flutter, misc, dart2, dart3, dart4]
         include:
           - dart-version: stable
             flutter-version: stable
@@ -34,8 +34,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm ci
-        run: npm ci --verbose
+      - name: npm install
+        run: npm install --verbose
 
       - name: dump folder list
         if: always()
