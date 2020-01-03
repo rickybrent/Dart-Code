@@ -125,11 +125,14 @@ export function isTestFileOrFolder(path: string): boolean {
 }
 
 export function isTestFile(file: string): boolean {
-	// To be a test, you must be _test.dart AND inside a test folder.
-	// https://github.com/Dart-Code/Dart-Code/issues/1165
-	// https://github.com/Dart-Code/Dart-Code/issues/2021
-	// https://github.com/Dart-Code/Dart-Code/issues/2034
-	return !!file && isDartFile(file) && isInsideFolderNamed(file, "test") && file.toLowerCase().endsWith("_test.dart");
+	// To be a test, you must be _test.dart AND inside a test folder or lib folder.
+	// https://github.com/Dart-Code/Dart-Code/issues/1165 (test folder inside lib folder)
+	// https://github.com/Dart-Code/Dart-Code/issues/2021 (non-test _test files in lib folder)
+	// https://github.com/Dart-Code/Dart-Code/issues/2034 (non-tests in test folder)
+	// https://github.com/Dart-Code/Dart-Code/issues/2160 (tests in lib folder)
+	return !!file && isDartFile(file)
+		&& (isInsideFolderNamed(file, "test") || isInsideFolderNamed(file, "lib"))
+		&& file.toLowerCase().endsWith("_test.dart");
 }
 
 // Similate to isTestFile, but requires that the file is _test.dart because it will be used as
