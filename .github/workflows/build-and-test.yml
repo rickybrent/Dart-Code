@@ -35,7 +35,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: npm ci
-        run: npm ci
+        run: npm ci --verbose
+
+      - name: dump folder list
+        if: always()
+        run: dir D:\a\Dart-Code\Dart-Code\node_modules\fsevents\node_modules\
+        
+      - name: dump folder list 2
+        if: always()
+        run: dir D:\a\Dart-Code\Dart-Code\node_modules\fsevents\node_modules\node-pre-gyp
         
       - name: Store NPM logs
         uses: actions/upload-artifact@v1
