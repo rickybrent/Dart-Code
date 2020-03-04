@@ -5,7 +5,7 @@ on: push
 jobs:
   build:
 
-    name: "${{ matrix.bot }} (${{ matrix.dart-version }}/${{ matrix.code-version }}/${{ matrix.os }})"
+    name: "${{ matrix.bot }} (${{ matrix.dart-version }}/${{ matrix.flutter-version }}/${{ matrix.code-version }}/${{ matrix.os }})"
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -16,7 +16,7 @@ jobs:
         dart-version: [stable]
         flutter-version: [stable, beta, dev, master]
         code-version: [stable]
-        bot: [flutter]
+        bot: [flutter, flutter_repo]
         
     steps:
 
